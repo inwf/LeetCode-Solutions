@@ -37,7 +37,7 @@ public class BinaryTreePreorderTraversal {
             // 2 确定终止条件
             // 3 确定单层递归的逻辑
 
-            List<Integer> ans = new LinkedList<>();
+            List<Integer> ans = new ArrayList<>();
             order(root, ans);
 
             return ans;
