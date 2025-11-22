@@ -56,11 +56,11 @@ public class NAryTreeLevelOrderTraversal {
 
                 for (int i = 0; i < n; i++) {
                     Node cur = queue.poll();
-                    for (Node next : cur.children) {
-                        if (next != null) {
-                            queue.offer(next);
-                        }
-                    }
+//                    for (Node next : cur.children) {
+//                        if (next != null) {
+//                            queue.offer(next);
+//                        }
+//                    }
                     temp.add(cur.val);
                 }
                 ans.add(temp);
