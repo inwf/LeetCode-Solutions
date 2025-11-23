@@ -1,6 +1,5 @@
-package leetcode.editor.cn;
+package leetcode.editor;
 
-import java.lang.reflect.Field;
 import java.util.*;
 
 public class Test {
