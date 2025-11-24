@@ -55,6 +55,7 @@ public class LowestCommonAncestorOfABinarySearchTree {
                 return dfs(cur.right, min, max);
             }
 
+            // 如果访问到 cur = p 或 q 的时候，直接返回自己
             return cur;
         }
     }
