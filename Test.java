@@ -1,6 +1,7 @@
 package leetcode.editor;
 
 import java.util.*;
+import java.util.concurrent.Callable;
 
 public class Test {
     public static void main(String[] args) throws Exception {
@@ -11,6 +12,15 @@ public class Test {
         list.add("A");
         list.add("B");
         System.out.println(list);
+        MyThread myThread = new MyThread();
+        Thread thread = new Thread(myThread);
+        thread.start();
+    }
+}
 
+class MyThread implements Runnable {
+    @Override
+    public void run() {
+        System.out.println("thread");
     }
 }
