@@ -4,23 +4,35 @@ import java.util.*;
 import java.util.concurrent.Callable;
 
 public class Test {
+    private static int i = 1;
+
     public static void main(String[] args) throws Exception {
-        HashSet<Integer> set = new HashSet<>();
-        set.add(1);
-        Map<Integer, Integer> map = new HashMap<>();
-        ArrayList<String> list = new ArrayList<>();
-        list.add("A");
-        list.add("B");
-        System.out.println(list);
-        MyThread myThread = new MyThread();
-        Thread thread = new Thread(myThread);
-        thread.start();
+        for (int i = 0; i < 3; i++) {
+            new Thread(new Print(i)).start();
+        }
+    }
+
+    private static class Print implements Runnable {
+
+        private final int index;
+
+        public Print(int index) {
+            this.index = index;
+        }
+
+        @Override
+        public void run() {
+            while (true) {
+                synchronized (Print.class) {
+                    if (i >= 101) {
+                        return;
+                    }
+                    System.out.println("Thread-" + index + " " + i++);
+                }
+            }
+        }
     }
 }
 
-class MyThread implements Runnable {
-    @Override
-    public void run() {
-        System.out.println("thread");
-    }
-}
+
+
