@@ -15,20 +15,19 @@ public class TwoSum {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public int[] twoSum(int[] nums, int target) {
+            // 哈希表
             Map<Integer, Integer> map = new HashMap<>();
-            int[] ans = new int[2];
-
-            for (int i = 0; i < nums.length; i++) {
+            int n = nums.length;
+            for (int i = 0; i < n; i++) {
                 if (map.containsKey(target - nums[i])) {
-                    ans[0] = map.get(target - nums[i]);
-                    ans[1] = i;
-                    break;
-                } else {
-                    map.put(nums[i], i);
+                    return new int[]{map.get(target-nums[i]),i};
                 }
+
+                // 存{值，下标}
+                map.put(nums[i],i);
             }
 
-            return ans;
+            return null;
         }
     }
     //leetcode submit region end(Prohibit modification and deletion)
