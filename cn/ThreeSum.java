@@ -15,28 +15,26 @@ public class ThreeSum {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public List<List<Integer>> threeSum(int[] nums) {
-            // 排序 + 双指针 + 剪枝 + 去重等操作
-            int n = nums.length;
-            Arrays.sort(nums);
+            // 要先排序
+            // 双指针 + 剪枝 + 去重
+            // 去重：同一个数只遍历第一个
             List<List<Integer>> ans = new ArrayList<>();
-
+            Arrays.sort(nums);
+            int n = nums.length;
             for (int i = 0; i < n; i++) {
                 if (nums[i] > 0) {
                     break;
                 }
-
-                // 去重
                 if (i > 0 && nums[i] == nums[i - 1]) {
-                    // 如果和前面的一样的话，就 + 1
-                    // 因为这个数已经判断过了
+                    // 去重：相同数字只遍历第一个
                     continue;
                 }
 
-                // 固定左边
                 int l = i + 1;
                 int r = n - 1;
-                // 双指针
+
                 while (l < r) {
+
                     int sum = nums[i] + nums[l] + nums[r];
 
                     if (sum > 0) {
@@ -44,19 +42,18 @@ public class ThreeSum {
                     } else if (sum < 0) {
                         l++;
                     } else {
-                        ans.add(List.of(nums[i], nums[l], nums[r]));
-
-                        // 去重操作：
-                        //（1 2 2 2 3）从最左边的 2 移到最右边的 2
-                        while (l < r && nums[l] == nums[l + 1]) l++;
-                        while (l < r && nums[r] == nums[r - 1]) r--;
-
-                        // 关键
+                        ans.add(List.of(nums[i],nums[l],nums[r]));
                         l++;
                         r--;
+                        // 注意去重时机：这里先 l++，r-- 是小巧思
+                        // 相同数字计算完第一个后再去重，所以要在 if 后去重
+                        // 跳过重复元素：1 2 2 2 2 3，要把最左边的 2 移到最右边的 2 然后再 + 1
+                        while(l<r && nums[l] == nums[l-1]) l++;
+                        while(l<r && nums[r] == nums[r+1]) r--;
                     }
                 }
             }
+
             return ans;
         }
     }
