@@ -1,0 +1,18 @@
+class Solution {
+    public int maxArea(int[] height) {
+        int mx = 0;
+        for (int l = 0, r = height.length - 1; l < r;) {
+            int mn = Math.min(height[l], height[r]);
+            mx = Math.max(mx, mn * (r - l));
+
+            if (height[l] <= height[r]) {
+                l++;
+            } else {
+                r--;
+            }
+        }
+        return mx;
+    }
+}
+//runtime:4 ms
+//memory:56.1 MB
