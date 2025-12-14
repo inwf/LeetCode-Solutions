@@ -14,39 +14,40 @@ public class FindAllAnagramsInAString {
 
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
-        int[] cnt1 = new int[26];
-        int[] cnt2 = new int[26];
+        int[] cntS = new int[26];
+        int[] cntP = new int[26];
         List<Integer> ans = new ArrayList<>();
 
         public List<Integer> findAnagrams(String s, String p) {
-            // 滑动窗口
-            int l = 0;
+            // 双指针滑动窗口
+            // 当两个桶数组相同的时候就判定两者是异位词
             for (int i = 0; i < p.length(); i++) {
-                cnt1[p.charAt(i) - 'a']++;
+                cntP[p.charAt(i) - 'a']++;
             }
 
-
-            for (int r = 0; r < s.length(); r++) {
-                cnt2[s.charAt(r) - 'a']++;
+            // 双指针 + 滑动窗口
+            int l = 0;
+            int r = 0;
+            for (r = 0; r < s.length(); r++) {
+                char c = s.charAt(r);
+                cntS[c - 'a']++;
 
                 if (r - l + 1 > p.length()) {
-                    cnt2[s.charAt(l) - 'a']--;
+                    cntS[s.charAt(l) - 'a']--;
                     l++;
                 }
 
-                // check() 只有长度相等的时候才可能 return true
+                // 只有长度相等的时候才进行判断
                 if (check()) {
                     ans.add(l);
                 }
             }
-
-
             return ans;
         }
 
         boolean check() {
             for (int i = 0; i < 26; i++) {
-                if (cnt1[i] != cnt2[i]) {
+                if (cntS[i] != cntP[i]) {
                     return false;
                 }
             }
