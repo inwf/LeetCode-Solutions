@@ -15,32 +15,33 @@ public class SlidingWindowMaximum {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public int[] maxSlidingWindow(int[] nums, int k) {
-            // 单调队列（严格来说看成双端队列即可）
-            // 维护一个单调递减的队列
-            // 入队的时候用 while 入
-            // 参考：https://www.bilibili.com/video/BV1bM411X72E
-            // 注意：存的是下标不是元素
+            // 单调递减队列：因为如果右边比左边的大的话
+            // 左边就不可能是最大值了（左边先出窗口）
+            // 维护一个单调递减队列
 
-            Deque<Integer> queue = new LinkedList<>();
+            Deque<Integer> deque = new LinkedList<>();
             int n = nums.length;
             int[] ans = new int[n - k + 1];
 
             for (int i = 0; i < n; i++) {
-                // 入队，找到单调递减队列中可以入的位置
-                while (!queue.isEmpty() && nums[queue.peekLast()] <= nums[i]) {
-                    queue.pollLast();
+                // 窗口左边下标：i - k + 1
+                // 找到第一个大于的，再 offer
+                // 因为如果队列中左边小于右边的话，这个队列左边那个元素就没用了
+                while (!deque.isEmpty() && nums[deque.peekLast()] < nums[i]) {
+                    deque.pollLast();
+                }
+                // 这个时候再 offer
+                deque.offer(i);
+
+                // 判断是否超出窗口
+                if (deque.peek() < i - k + 1) {
+                    deque.poll();
                 }
 
-                queue.offer(i);
-
-                if (queue.peek() < i - k + 1) {
-                    queue.poll();
-                }
                 if (i - k + 1 >= 0) {
-                    ans[i - k + 1] = nums[queue.peek()];
+                    ans[i - k + 1] = nums[deque.peek()];
                 }
             }
-
             return ans;
         }
     }
