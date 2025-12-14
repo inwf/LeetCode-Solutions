@@ -15,18 +15,16 @@ public class MaximumSubarray {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public int maxSubArray(int[] nums) {
-            // 简单 dp
+            // 要么是前一个数最大和 + nums[i]，要么是 nums[i]
             int n = nums.length;
-            // dp[i] 表示以 nums[i] 结尾的子数组的最大和
+            // dp[i] 以 nums[i] 结尾的最大和
             int[] dp = new int[n];
-            dp[0] = nums[0];
             int ans = nums[0];
-
+            dp[0] = nums[0];
             for (int i = 1; i < n; i++) {
                 dp[i] = Math.max(dp[i - 1] + nums[i], nums[i]);
                 ans = Math.max(ans, dp[i]);
             }
-
             return ans;
         }
     }
