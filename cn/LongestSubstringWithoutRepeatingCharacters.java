@@ -15,28 +15,27 @@ public class LongestSubstringWithoutRepeatingCharacters {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public int lengthOfLongestSubstring(String s) {
+            // 双指针
+            // 当前窗口内字符不重复
+
             int l = 0;
             int r = 0;
             int n = s.length();
             int ans = 0;
             Set<Character> set = new HashSet<>();
-
             for (r = 0; r < n; r++) {
                 char c = s.charAt(r);
 
-                if (set.contains(c)) {
-                    while (set.contains(c)) {
-                        // 直到不包含 r 位置的字符
-                        char temp = s.charAt(l);
-                        set.remove(temp);
-                        l++;
-                    }
+                // 当前 r 的下标是窗口右边界
+                while (set.contains(c)) {
+                    // 注意移除的字符是 s.charAt(l)
+                    set.remove(s.charAt(l));
+                    l++;
                 }
 
                 set.add(c);
                 ans = Math.max(ans, r - l + 1);
             }
-
             return ans;
         }
     }
