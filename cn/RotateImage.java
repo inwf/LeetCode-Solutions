@@ -15,8 +15,10 @@ public class RotateImage {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public void rotate(int[][] matrix) {
-            // 本质：转置 + 行翻转
+            // 选择就是转置 + 行变换
             int n = matrix.length;
+
+            // 转置
             for (int i = 0; i < n; i++) {
                 for (int j = 0; j < i; j++) {
                     int temp = matrix[i][j];
@@ -25,10 +27,11 @@ public class RotateImage {
                 }
             }
 
-            for (int i = 0; i < n; i++) {
+            // 行翻转
+            for(int i = 0;i<n;i++){
                 int l = 0;
-                int r = n - 1;
-                while (l < r) {
+                int r = n-1;
+                while(l<r){
                     int temp = matrix[i][l];
                     matrix[i][l] = matrix[i][r];
                     matrix[i][r] = temp;
