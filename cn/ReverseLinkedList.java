@@ -26,15 +26,19 @@ public class ReverseLinkedList {
      */
     class Solution {
         public ListNode reverseList(ListNode head) {
+            // 三个指针
+            // 结束的时候 pre 是新 head
+
             ListNode pre = null;
             ListNode cur = head;
-            ListNode temp = null;
+            ListNode next = null;
 
             while (cur != null) {
-                temp = cur.next;
+                next = cur.next;
                 cur.next = pre;
+                // 右移一个节点
                 pre = cur;
-                cur = temp;
+                cur = next;
             }
 
             return pre;
