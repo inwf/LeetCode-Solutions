@@ -15,9 +15,12 @@ public class RotateArray {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public void rotate(int[] nums, int k) {
-            // 多次翻转即可（左闭右闭）
+            // 1 全体翻转
+            // 2 翻转 [0,k}
+            // 3 翻转 [k,n-1]
+            // 注意：k 要取模
             int n = nums.length;
-            k %= n; // 当 k > n 时，多余 n 的部分其实没用
+            k = k % n;
             reverse(nums, 0, n - 1);
             reverse(nums, 0, k - 1);
             reverse(nums, k, n - 1);
