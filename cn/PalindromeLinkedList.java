@@ -26,52 +26,49 @@ public class PalindromeLinkedList {
      */
     class Solution {
         public boolean isPalindrome(ListNode head) {
-            // 反转链表 + 快慢指针找链表中点
+            // 寻找中间节点 + 翻转链表
+            // 中间节点找的是偏右的那个
             ListNode mid = findMid(head);
-            ListNode left = head;
             ListNode right = reverse(mid);
+            ListNode left = head;
 
             while (right != null) {
                 if (left.val != right.val) {
                     return false;
                 }
-                right = right.next;
                 left = left.next;
+                right = right.next;
             }
-
             return true;
         }
 
-        // 反转链表
-        public ListNode reverse(ListNode head) {
-            ListNode pre = null;
-            ListNode cur = head;
-            ListNode temp = null;
-
-            while (cur != null) {
-                temp = cur.next;
-                cur.next = pre;
-                pre = cur;
-                cur = temp;
-            }
-
-            // 注意：此时 cur = null，已经反转完成
-            return pre;
-        }
-
-        // 快慢指针找链表中点
         public ListNode findMid(ListNode head) {
+            // 快慢指针找中间节点（靠右的那个）
             ListNode fast = head;
             ListNode slow = head;
             while (fast != null && fast.next != null) {
                 fast = fast.next.next;
                 slow = slow.next;
             }
-
             return slow;
         }
 
+        public ListNode reverse(ListNode head) {
+            // 翻转节点
+            // 返回的新头是 pre
+            ListNode pre = null;
+            ListNode cur = head;
+            ListNode next = null;
 
+            while (cur != null) {
+                next = cur.next;
+                cur.next = pre;
+                // 右移一位
+                pre = cur;
+                cur = next;
+            }
+            return pre;
+        }
     }
     //leetcode submit region end(Prohibit modification and deletion)
 
