@@ -27,9 +27,8 @@ public class IntersectionOfTwoLinkedLists {
      */
     public class Solution {
         public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
-            // 就是两个指针走相同的路径长度
-            // 因为不相交返回 null
-            // 所以 p1 和 p2 可以到达 null
+            // 要么同时到 null
+            // 要么同时到相遇点
 
             ListNode p1 = headA;
             ListNode p2 = headB;
@@ -51,6 +50,8 @@ public class IntersectionOfTwoLinkedLists {
             return p1;
         }
     }
+
+
     //leetcode submit region end(Prohibit modification and deletion)
 
 
