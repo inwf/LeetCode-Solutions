@@ -15,14 +15,13 @@ public class SearchA2dMatrixIi {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public boolean searchMatrix(int[][] matrix, int target) {
-            // 法1：遍历行，然后每行做二分法
-            // 法2：灵神的比较右上角法：https://leetcode.cn/problems/search-a-2d-matrix-ii/solutions/2783938/tu-jie-pai-chu-fa-yi-tu-miao-dong-python-kytg/?envType=study-plan-v2&envId=top-100-liked
-
-            // 二分
+            // 对每一行进行二分法
+            // 找不到就返回 false
             int m = matrix.length;
             int n = matrix[0].length;
 
             for (int i = 0; i < m; i++) {
+                // 对每一行进行二分法
                 // 左闭右闭
                 int l = 0;
                 int r = n - 1;
