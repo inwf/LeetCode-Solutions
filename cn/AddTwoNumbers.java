@@ -26,28 +26,32 @@ public class AddTwoNumbers {
      */
     class Solution {
         public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+            // 符合数学定义：从低位（就是个位）开始加
+
             ListNode dummyHead = new ListNode(-1);
             ListNode cur = dummyHead;
-            // 用来求和当前两个节点的，如果 > 10，说明要进位
             int sum = 0;
 
             while (l1 != null || l2 != null || sum != 0) {
-                // 有一个存在就要继续求和
+                // 有一个存在就要继续加
+
                 if (l1 != null) {
                     sum += l1.val;
                     l1 = l1.next;
                 }
+
                 if (l2 != null) {
                     sum += l2.val;
                     l2 = l2.next;
                 }
 
-                ListNode temp = new ListNode(sum%10);
-                sum/=10;
+                ListNode temp = new ListNode(sum % 10);
                 cur.next = temp;
                 cur = cur.next;
-            }
 
+                // 如果有进位的话就放到下一轮即可 sum /= 10;
+                sum /= 10;
+            }
             return dummyHead.next;
         }
     }
