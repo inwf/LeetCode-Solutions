@@ -27,22 +27,24 @@ public class LinkedListCycleIi {
      */
     public class Solution {
         public ListNode detectCycle(ListNode head) {
-            ListNode dummyHead = new ListNode(-1, head);
-            ListNode fast = dummyHead;
-            ListNode slow = dummyHead;
+            // 典型题
+            // 返回交点
 
-            while (fast.next != null && fast.next.next != null) {
+            ListNode fast = head;
+            ListNode slow = head;
+
+            while (fast != null && fast.next != null) {
                 fast = fast.next.next;
                 slow = slow.next;
-
                 if (fast == slow) {
                     // 有环
-                    ListNode idx = dummyHead;
-                    while (idx != slow) {
-                        idx = idx.next;
+                    ListNode temp = head;
+                    while (temp != slow) {
+                        temp = temp.next;
                         slow = slow.next;
                     }
-                    return idx;
+
+                    return temp;
                 }
             }
             return null;
