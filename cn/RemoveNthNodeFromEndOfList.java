@@ -26,6 +26,8 @@ public class RemoveNthNodeFromEndOfList {
      */
     class Solution {
         public ListNode removeNthFromEnd(ListNode head, int n) {
+            // 前后指针
+            // 用 dummyHead 是处理删除第一个节点的情况
             ListNode dummyHead = new ListNode(-1, head);
             ListNode fast = dummyHead;
             ListNode slow = dummyHead;
@@ -38,6 +40,8 @@ public class RemoveNthNodeFromEndOfList {
                 slow = slow.next;
             }
 
+            // 当前 fast 在最后一个节点
+            // 要删除 slow.next 节点
             slow.next = slow.next.next;
 
             return dummyHead.next;
