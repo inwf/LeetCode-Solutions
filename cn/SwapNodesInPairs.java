@@ -28,23 +28,29 @@ public class SwapNodesInPairs {
      */
     class Solution {
         public ListNode swapPairs(ListNode head) {
+            // 可以在草稿纸上画出这个过程，还是很好理解的
+            // 一共四个辅助节点
+            // 每次调换 cur 后面两个节点的顺序
+            // 所以要用 dummyHead
 
-            ListNode dummyHead = new ListNode(-1, head);
+            ListNode dummyHead = new ListNode(-1,head);
             ListNode cur = dummyHead;
             ListNode first = null;
             ListNode second = null;
             ListNode temp = null;
 
-            while (cur.next !=null && cur.next.next != null){
+            while (cur.next != null && cur.next.next != null) {
                 first = cur.next;
                 second = cur.next.next;
                 temp = cur.next.next.next;
 
+                // 这里可以在草稿纸上画出变换过程，很好理解的
                 cur.next = second;
                 second.next = first;
                 first.next = temp;
                 cur = first;
             }
+
             return dummyHead.next;
         }
     }
