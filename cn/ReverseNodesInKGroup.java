@@ -26,43 +26,45 @@ public class ReverseNodesInKGroup {
      */
     class Solution {
         public ListNode reverseKGroup(ListNode head, int k) {
-            // 统计链表长度
+            // 先统计长度
             int n = 0;
             ListNode cnt = head;
             while (cnt != null) {
-                n++;
                 cnt = cnt.next;
+                n++;
             }
 
-            // dummy: 虚拟头节点，为了方便处理原本的头节点 head 发生变化的情况。
-            // p0: “守门员”。它永远站在待翻转组的前一个位置。它负责把翻转好的一组接回主链表。
-            // cur: “当前工兵”。它负责在组内遍历。
-            // pre: “新头领”。在翻转过程中，它会变成当前组新的头节点。
-
-            ListNode dummyHead = new ListNode(-1);
-            dummyHead.next = head;
-            ListNode pre = null;
-            ListNode temp = null;
-            ListNode cur = head;
+            // 有点像反转链表
+            // 但是要维护一下每一轮反转的前一个节点
+            // p0 是待翻转组的前一个位置
+            // 每一轮都是将 cur 指向前一个节点
+            ListNode dummyHead = new ListNode(-1, head);
             ListNode p0 = dummyHead;
+            ListNode cur = head;
+            ListNode pre = null;
+            ListNode next = null;
 
-            // 总共翻转 n/k 轮
             for (int i = 0; i < n / k; i++) {
-                // 每轮翻转 k 个节点
+                // 总共反转 n / k 轮
                 for (int j = 0; j < k; j++) {
-                    temp = cur.next;
+                    // 每轮反转 k 个节点
+                    next = cur.next;
                     cur.next = pre;
+                    // 右移一位
                     pre = cur;
-                    cur = temp;
+                    cur = next;
                 }
+                // 上面的 for 循环结束后，cur 是下一轮的开始节点
+                // pre 是反转后的节点的新头
 
+                // 将反转的链表组合到大链表里面去
                 // p0 是每轮翻转的前一个节点
-                // 每轮翻转完成后用 p0
-                // nx 是每轮翻转完后最左边的节点（这时候翻转完的链表朝左）
+                // nx 是 p0 原先的下一个节点，现在变成反转后的最左的节点了（从右往左）
                 ListNode nx = p0.next;
                 p0.next = pre;
                 nx.next = cur;
-                // 把 p0 设置成下一轮翻转组的前一个节点
+
+                // 把 p0 更新成下一轮待反转的链表的前一个节点
                 p0 = nx;
             }
             return dummyHead.next;
