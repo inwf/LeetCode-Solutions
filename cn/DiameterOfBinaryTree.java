@@ -34,7 +34,6 @@ public class DiameterOfBinaryTree {
 
         public int diameterOfBinaryTree(TreeNode root) {
             // 二叉树的链：（就是当前节点到叶子节点经过的最多边的个数）
-            // 发现很多人不了解链：
             // 想象你站在树上的一个节点（比如一根树枝的某个位置），“链” 就是从你脚下的节点出发，向下延伸到最末端叶子的那条最长的 “树枝”。
             // 如果你站的是一片叶子（树枝的最顶端），那这条链就只有你脚下这一个点，长度是 0（因为没有更长的延伸了）。
             // 如果你站的是一个空节点（根本没有这个节点），链长就是 - 1（可以理解为 “不存在” 的标记）。
@@ -47,15 +46,11 @@ public class DiameterOfBinaryTree {
 
         public int dfs(TreeNode cur) {
             if (cur == null) {
-                // 叶子节点的链 = -1（到 null） + 1 = 0
                 return -1;
             }
 
-            // 子节点的链 + 1
-            // 因为子节点还要经过一条边到当前节点
             int l = dfs(cur.left) + 1;
             int r = dfs(cur.right) + 1;
-
             ans = Math.max(ans, l + r);
             return Math.max(l, r);
         }
