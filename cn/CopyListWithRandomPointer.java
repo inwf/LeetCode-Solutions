@@ -30,13 +30,12 @@ public class CopyListWithRandomPointer {
 
     class Solution {
         public Node copyRandomList(Node head) {
-            // 法1：灵神的交错链表
-            // 法2：哈希表：key 是原链表，value 是新链表
+            // 法1：灵神交错链表
+            // 法2：哈希表
 
+            // 构建哈希表
             Map<Node, Node> map = new HashMap<>();
             Node p = head;
-
-            // 构建 map
             while (p != null) {
                 Node temp = new Node(p.val);
                 map.put(p, temp);
@@ -47,10 +46,12 @@ public class CopyListWithRandomPointer {
             Node dummyHead = new Node(-1);
             dummyHead.next = map.get(head);
             p = head;
+
             while (p != null) {
-                map.get(p).next = map.get(p.next);
-                map.get(p).random = map.get(p.random);
-                p=p.next;
+                Node temp = map.get(p);
+                temp.next = map.get(p.next);
+                temp.random = map.get(p.random);
+                p = p.next;
             }
 
             return dummyHead.next;
