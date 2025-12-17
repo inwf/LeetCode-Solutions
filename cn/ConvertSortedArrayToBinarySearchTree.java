@@ -32,19 +32,22 @@ public class ConvertSortedArrayToBinarySearchTree {
     class Solution {
         public TreeNode sortedArrayToBST(int[] nums) {
             // 要平衡，所以左右两边节点数量尽可能相同
-            // 每次二分找到中间节点，这个节点作为根节点
-            // 前续遍历即可：中 -> 左 -> 右
+            // 每次二分找到中间节点，然后这个节点作为根节点
+            // 再前续遍历即可：中 -> 左 -> 右
+
             int n = nums.length;
             return dfs(nums, 0, n - 1);
         }
 
-        // 左闭右闭 while(l <= r)
+        // 左闭右闭
         public TreeNode dfs(int[] nums, int left, int right) {
             if (left > right) {
                 return null;
             }
 
             int mid = left + (right - left) / 2;
+
+            // 新的根节点
             TreeNode cur = new TreeNode(nums[mid]);
             cur.left = dfs(nums, left, mid - 1);
             cur.right = dfs(nums, mid + 1, right);
