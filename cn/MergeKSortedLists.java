@@ -26,25 +26,28 @@ public class MergeKSortedLists {
      */
     class Solution {
         public ListNode mergeKLists(ListNode[] lists) {
-            // 用小根堆，每次 poll() 出最小值，然后 offer 进刚才 poll 的下一个
-            PriorityQueue<ListNode> queue = new PriorityQueue<>((a, b) -> a.val - b.val);
+            // 小根堆，每次加入最小的头结点
 
-            for (ListNode p : lists) {
-                if (p != null) {
-                    queue.offer(p);
+            PriorityQueue<ListNode> heap = new PriorityQueue<>((a, b) -> a.val - b.val);
+            int n = lists.length;
+
+            for (int i = 0; i < n; i++) {
+                if (lists[i] != null) {
+                    heap.offer(lists[i]);
                 }
             }
 
+            // 构建链表
             ListNode dummyHead = new ListNode(-1);
             ListNode cur = dummyHead;
-            while (!queue.isEmpty()) {
-                ListNode temp = queue.poll();
+            while (!heap.isEmpty()) {
+                ListNode temp = heap.poll();
                 cur.next = temp;
-                if (temp.next != null) {
-                    queue.offer(temp.next);
-                }
-
                 cur = cur.next;
+                if (temp.next != null) {
+                    // 将该节点下一个加入小根堆
+                    heap.offer(temp.next);
+                }
             }
 
             return dummyHead.next;
