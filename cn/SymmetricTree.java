@@ -31,8 +31,8 @@ public class SymmetricTree {
      */
     class Solution {
         public boolean isSymmetric(TreeNode root) {
-            // 对称判断，所以一次把镜像对称的 左节点和右节点 全取出来
-            // 然后按照镜像对称的顺序加入队列
+            // bfs
+            // 两个两个加，每次左边放一个右边放一个
             return bfs(root);
         }
 
@@ -44,15 +44,12 @@ public class SymmetricTree {
             Deque<TreeNode> queue = new LinkedList<>();
             queue.offer(root.left);
             queue.offer(root.right);
-
             while (!queue.isEmpty()) {
-                // 先取左再去右，所以下面是先加左再加右（左的左和右的右匹配）
+                // L 是左边那个子树，R 是右边那个子树
                 TreeNode L = queue.poll();
                 TreeNode R = queue.poll();
 
                 if (L == null && R == null) {
-                    // 两个都是 null，那么这两个子节点就不继续存了
-                    //（因为没有子节点）
                     continue;
                 }
 
@@ -64,11 +61,12 @@ public class SymmetricTree {
                     return false;
                 }
 
-                // 当前节点是对称的，继续存子节点进一步判断子节点是否对称
-                // 左的左和右的右配对
+                // 当前两个节点是对称的
+                // 左边放子左节点，右边放右子节点
                 queue.offer(L.left);
                 queue.offer(R.right);
-                // 右的右和左的左配对
+
+                // 同理
                 queue.offer(L.right);
                 queue.offer(R.left);
             }
