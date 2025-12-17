@@ -26,41 +26,44 @@ public class SortList {
      */
     class Solution {
         public ListNode sortList(ListNode head) {
-            // 就是归并排序 = 找到链表中间节点 + 合并有序链表
+            // 就是归并排序：递归
+            // 找到中间节点 + 合并两个有序链表
+
             if (head == null || head.next == null) {
                 return head;
             }
 
-            // 注意，这里要找中间偏左的节点
-            ListNode mid = findMidList(head);
-            ListNode head2 = mid.next;
-            // 分割两个链表
+            // 先均分成两个链表
+            ListNode mid = findMId(head);
+            ListNode left = head;
+            ListNode right = mid.next;
             mid.next = null;
 
-            ListNode l1 = sortList(head);
-            ListNode l2 = sortList(head2);
+            // 递归
+            ListNode l1 = sortList(left);
+            ListNode l2 = sortList(right);
 
-            return mergeList(l1, l2);
+
+            // 均分到不能均分的时候再 return 合并后的结果
+            return merge(l1, l2);
         }
 
-        // 找到中间节点
-        public ListNode findMidList(ListNode head) {
-            ListNode fast = new ListNode(-1);
-            fast.next = head;
-            ListNode slow = fast;
+        public ListNode findMId(ListNode head) {
+            // 返回偏左的，所以要虚拟头结点
+            ListNode dummyHead = new ListNode(-1, head);
+            ListNode fast = dummyHead;
+            ListNode slow = dummyHead;
             while (fast != null && fast.next != null) {
                 fast = fast.next.next;
                 slow = slow.next;
             }
-
             return slow;
         }
 
-        // 合并两个有序链表
-        public ListNode mergeList(ListNode p1, ListNode p2) {
+        public ListNode merge(ListNode p1, ListNode p2) {
+            // 合并两个有序链表
             ListNode dummyHead = new ListNode(-1);
             ListNode cur = dummyHead;
-
             while (p1 != null && p2 != null) {
                 if (p1.val < p2.val) {
                     cur.next = p1;
@@ -73,9 +76,12 @@ public class SortList {
                 cur = cur.next;
             }
 
+            // 找出余量
             if (p1 != null) {
                 cur.next = p1;
-            } else {
+            }
+
+            if (p2 != null) {
                 cur.next = p2;
             }
 
