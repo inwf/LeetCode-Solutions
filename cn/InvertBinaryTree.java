@@ -31,31 +31,31 @@ public class InvertBinaryTree {
      */
     class Solution {
         public TreeNode invertTree(TreeNode root) {
-            // bfs 对于每一层每个节点，先让这个节点的子节点交换一下，再将子节点入队
+            // dfs 太简单了，三刷的时候可以写一下
+            // bfs 每层逐个交换
             bfs(root);
             return root;
         }
 
-        public void bfs(TreeNode root) {
-            if (root == null) {
+        public void bfs(TreeNode cur) {
+            if (cur == null) {
                 return;
             }
 
             Deque<TreeNode> queue = new LinkedList<>();
-            queue.offer(root);
+            queue.offer(cur);
 
-            while(!queue.isEmpty()){
-
-                // 交换当前节点的左右子节点
-                TreeNode cur = queue.poll();
+            while (!queue.isEmpty()) {
+                cur = queue.poll();
+                // 交换当前节点
                 TreeNode temp = cur.left;
                 cur.left = cur.right;
                 cur.right = temp;
 
-                if (cur.left!=null){
+                if (cur.left != null) {
                     queue.offer(cur.left);
                 }
-                if (cur.right!=null){
+                if (cur.right != null) {
                     queue.offer(cur.right);
                 }
             }
