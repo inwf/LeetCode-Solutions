@@ -30,38 +30,38 @@ public class BinaryTreeLevelOrderTraversal {
      * }
      */
     class Solution {
-        public List<List<Integer>> levelOrder(TreeNode root) {
-            List<List<Integer>> ans = new ArrayList<>();
-            bfs(root, ans);
+        List<List<Integer>> ans = new ArrayList<>();
 
+        public List<List<Integer>> levelOrder(TreeNode root) {
+            // bfs 模板提
+            bfs(root);
             return ans;
         }
 
-        public void bfs(TreeNode root, List<List<Integer>> ans) {
+        public void bfs(TreeNode root) {
             if (root == null) {
                 return;
             }
+
             Deque<TreeNode> queue = new LinkedList<>();
             queue.offer(root);
 
             while (!queue.isEmpty()) {
-                // 用来存这一层的所有节点
-                List<Integer> temp = new ArrayList<>();
-                // 这一层有 n 个节点
                 int n = queue.size();
+                List<Integer> temp = new ArrayList<>(n);
 
-                // 一口气把这一层全 poll，把下一层全 offer
                 for (int i = 0; i < n; i++) {
-                    TreeNode now = queue.poll();
-                    temp.add(now.val);
+                    TreeNode cur = queue.poll();
+                    temp.add(cur.val);
 
-                    if (now.left != null) {
-                        queue.offer(now.left);
+                    if (cur.left!=null){
+                        queue.offer(cur.left);
                     }
-                    if (now.right != null) {
-                        queue.offer(now.right);
+                    if (cur.right!=null){
+                        queue.offer(cur.right);
                     }
                 }
+
                 ans.add(temp);
             }
         }
