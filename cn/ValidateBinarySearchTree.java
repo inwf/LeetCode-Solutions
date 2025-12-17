@@ -30,42 +30,38 @@ public class ValidateBinarySearchTree {
      * }
      */
     class Solution {
+        // 注意这里是 long
         private long pre = Long.MIN_VALUE;
-
         public boolean isValidBST(TreeNode root) {
             // 按照二叉搜索树的性质来判断
-            // 左子树节点值小于当前节点
-            // 右子树节点值大于当前节点
+            // 左子树节点值小于当前节点、右子树节点值大于当前节点
+            // 就是中序遍历单调递增
             // 对于每个节点，判断当前节点是否满足二叉搜索树
 
             return dfs(root);
         }
 
         public boolean dfs(TreeNode cur) {
-            // 因为是二叉搜索树，所以用中序遍历（左 -> 中 -> 右），节点值是递增的！
             if (cur == null) {
                 return true;
             }
 
-            boolean left = dfs(cur.left); // 左
+            // 左 -> 中 -> 右
+            boolean left = dfs(cur.left);
             if (!left) {
-                // 左子树不符合
                 return false;
             }
 
-            if (cur.val <= pre) { // 中
-                // 当前节点不符合
+            if (pre >= cur.val) {
                 return false;
             }
             pre = cur.val;
 
-            boolean right = dfs(cur.right); // 右
+            boolean right = dfs(cur.right);
             if (!right) {
-                // 右子树不符合
                 return false;
             }
 
-            // 都符合
             return true;
         }
     }
