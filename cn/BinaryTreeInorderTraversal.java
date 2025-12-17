@@ -31,20 +31,24 @@ public class BinaryTreeInorderTraversal {
      */
     class Solution {
         public List<Integer> inorderTraversal(TreeNode root) {
-            // 中序遍历（根在中）：左 -> 中 -> 右
+            // 中序遍历
+            // 递归：左 -> 中 -> 右
             List<Integer> ans = new ArrayList<>();
-            order(root, ans);
+            inorder(root, ans);
             return ans;
         }
 
-        public void order(TreeNode cur, List<Integer> ans) {
-            if (cur == null) {
+        public void inorder(TreeNode cur, List<Integer> ans) {
+            if (cur == null){
                 return;
             }
 
-            order(cur.left, ans);
+            // 左
+            inorder(cur.left,ans);
+            // 中
             ans.add(cur.val);
-            order(cur.right, ans);
+            // 右
+            inorder(cur.right,ans);
         }
     }
     //leetcode submit region end(Prohibit modification and deletion)
