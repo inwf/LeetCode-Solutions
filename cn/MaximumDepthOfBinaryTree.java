@@ -31,27 +31,25 @@ public class MaximumDepthOfBinaryTree {
      */
     class Solution {
         public int maxDepth(TreeNode root) {
+            // dfs 太简单了
+            // 用 bfs 层序遍历
             return bfs(root);
         }
 
-        public int bfs(TreeNode root) {
-            if (root == null) {
-                return 0;
+        public int bfs(TreeNode cur) {
+            int ans = 0;
+            Deque<TreeNode> queue = new LinkedList<>();
+            // 这里要特判一下
+            if (cur != null) {
+                queue.offer(cur);
             }
 
-            int dep = 0;
-            Deque<TreeNode> queue = new LinkedList<>();
-            queue.offer(root);
-
             while (!queue.isEmpty()) {
-                // 当前层节点个数
                 int n = queue.size();
-
-                // 能进到这说明这一层存在
-                // 如果这一层不存在的话，n = 0，就不会进入 while 循环了
-                dep++;
+                // 能进来就说明这一层有节点
+                ans++;
                 for (int i = 0; i < n; i++) {
-                    TreeNode cur = queue.poll();
+                    cur = queue.poll();
                     if (cur.left != null) {
                         queue.offer(cur.left);
                     }
@@ -60,7 +58,7 @@ public class MaximumDepthOfBinaryTree {
                     }
                 }
             }
-            return dep;
+            return ans;
         }
     }
     //leetcode submit region end(Prohibit modification and deletion)
