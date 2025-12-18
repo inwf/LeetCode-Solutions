@@ -31,7 +31,7 @@ public class BinaryTreeRightSideView {
      */
     class Solution {
         public List<Integer> rightSideView(TreeNode root) {
-            // 就是层序遍历，然后只存最后边的元素即可
+            // 层序遍历，只保留最后一层最后一个节点即可
             List<Integer> ans = new ArrayList<>();
             bfs(root, ans);
             return ans;
@@ -48,20 +48,20 @@ public class BinaryTreeRightSideView {
             while (!queue.isEmpty()) {
                 int n = queue.size();
 
-                // 一口气把这一层全 poll() 把下一层全 offer()
                 for (int i = 0; i < n; i++) {
-                    TreeNode now = queue.poll();
+                    TreeNode cur = queue.poll();
 
-                    if (now.left != null) {
-                        queue.offer(now.left);
+                    if (cur.left != null) {
+                        queue.offer(cur.left);
                     }
-                    if (now.right != null) {
-                        queue.offer(now.right);
+
+                    if (cur.right != null) {
+                        queue.offer(cur.right);
                     }
 
                     if (i == n - 1) {
-                        // 只存最右边
-                        ans.add(now.val);
+                        // 最后一个元素
+                        ans.add(cur.val);
                     }
                 }
             }
