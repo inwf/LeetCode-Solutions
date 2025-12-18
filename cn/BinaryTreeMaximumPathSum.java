@@ -44,19 +44,12 @@ public class BinaryTreeMaximumPathSum {
                 return 0;
             }
 
-            // 找出左子节点的最大路径
-            int l = dfs(cur.left);
+            // 0 是可以不选左节点：这里写的很妙
+            int left = Math.max(0, dfs(cur.left));
+            int right = Math.max(0, dfs(cur.right));
 
-            // 找出右子节点的最大路径
-            int r = dfs(cur.right);
-
-            // 当前节点最大路径 = 当前节点
-            // 或者当前节点加左子节点最大路径
-            // 或者当前节点加右子节点最大路径
-            ans = Math.max(ans, Math.max(cur.val, cur.val + l + r));
-
-            // 为什么和 0 比？如果都是负数的话，那一个节点都不选，他上层节点就是 = 上层节点加这层（返回的 0）
-            return Math.max(0, cur.val + Math.max(l, r));
+            ans = Math.max(ans, cur.val + left + right);
+            return cur.val + Math.max(left, right);
         }
     }
     //leetcode submit region end(Prohibit modification and deletion)
