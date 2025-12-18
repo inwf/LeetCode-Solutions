@@ -2,8 +2,6 @@ package leetcode.editor.cn;
 
 import java.util.*;
 
-import leetcode.editor.common.*;
-
 /**
  * 994 腐烂的橘子
  * 2025-12-11 13:55:44
@@ -14,34 +12,32 @@ public class RottingOranges {
 
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
-        // 新鲜橘子个数
+        // 新鲜橘子个数，因为如果不能全腐烂返回 -1，所以要记录 cnt
         int cnt = 0;
         int ans = 0;
         int[] dx = {0, 1, 0, -1};
         int[] dy = {1, 0, -1, 0};
 
-
         public int orangesRotting(int[][] grid) {
-            // 就是层序遍历：BFS
+            // 类似于层序遍历，有 x 层答案就是 x - 1( 如果没有新的就不算这一层了 )：BFS
             // 每次遍历新加的腐烂的橘子
 
+            Deque<int[]> queue = new LinkedList<>();
             int m = grid.length;
             int n = grid[0].length;
-            Deque<int[]> queue = new LinkedList<>();
 
             for (int i = 0; i < m; i++) {
                 for (int j = 0; j < n; j++) {
-                    if (grid[i][j] == 1) {
-                        cnt++;
-                    } else if (grid[i][j] == 2) {
+                    if (grid[i][j] == 2) {
                         queue.offer(new int[]{i, j});
+                    } else if (grid[i][j] == 1) {
+                        cnt++;
                     }
                 }
             }
 
             bfs(grid, queue);
-
-            return cnt > 0 ? -1 : ans;
+            return cnt == 0 ? ans : -1;
         }
 
         public void bfs(int[][] grid, Deque<int[]> queue) {
@@ -49,25 +45,23 @@ public class RottingOranges {
             int n = grid[0].length;
 
             while (!queue.isEmpty()) {
-                // 这一层的个数
                 int size = queue.size();
-                // 判断这一轮是否有新橘子被感染
-                // 有的话时间才需要 + 1
                 boolean hasNew = false;
 
-                // 遍历这一层
                 for (int i = 0; i < size; i++) {
                     int[] cur = queue.poll();
-                    for (int idx = 0; idx < 4; idx++) {
-                        int nx = cur[0] + dx[idx];
-                        int ny = cur[1] + dy[idx];
+                    int x = cur[0];
+                    int y = cur[1];
+
+                    for (int j = 0; j < 4; j++) {
+                        int nx = x + dx[j];
+                        int ny = y + dy[j];
 
                         if (nx >= 0 && nx < m && ny >= 0 && ny < n && grid[nx][ny] == 1) {
-                            // 有新的感染
-                            hasNew = true;
                             grid[nx][ny] = 2;
-                            cnt--;
                             queue.offer(new int[]{nx, ny});
+                            hasNew = true;
+                            cnt--;
                         }
                     }
                 }
