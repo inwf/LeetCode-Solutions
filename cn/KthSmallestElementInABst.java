@@ -31,11 +31,10 @@ public class KthSmallestElementInABst {
      */
     class Solution {
         int cnt = 0;
-        int ans;
+        int ans = -1;
 
         public int kthSmallest(TreeNode root, int k) {
-            // 二叉搜索树 -> 中序遍历
-            // 第 k 小：就是中序遍历的第 k 个节点
+            // 二叉搜索树：第 k 小就是中序遍历第 k 个
             dfs(root, k);
             return ans;
         }
@@ -45,21 +44,15 @@ public class KthSmallestElementInABst {
                 return;
             }
 
-            if (cnt == k) {
-                return;
-            }
-
-            // 左
+            // 左 -> 中 -> 右
             dfs(cur.left, k);
 
-            // 中
             cnt++;
             if (cnt == k) {
                 ans = cur.val;
                 return;
             }
 
-            // 右
             dfs(cur.right, k);
         }
     }
