@@ -30,11 +30,13 @@ public class FlattenBinaryTreeToLinkedList {
      * }
      */
     class Solution {
-        TreeNode head; // 就是结果链表的头节点
+        // 就是结果链表的头节点（初始默认 null）
+        TreeNode head;
 
         public void flatten(TreeNode root) {
             // 就是先序遍历的顺序，但是先序遍历会导致右节点数据丢失（从上往下）
             // 所以可以按照 右 -> 左 -> 中 的顺序，从下往上，用头插法
+            // 总结：倒着构建这个单链表
             dfs(root);
         }
 
@@ -45,8 +47,9 @@ public class FlattenBinaryTreeToLinkedList {
 
             dfs(cur.right);
             dfs(cur.left);
-            cur.right = head;
+
             cur.left = null;
+            cur.right = head;
             head = cur;
         }
     }
