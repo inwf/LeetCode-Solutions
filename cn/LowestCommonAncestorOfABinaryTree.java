@@ -27,32 +27,34 @@ public class LowestCommonAncestorOfABinaryTree {
         public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
             // dfs 后序遍历：当前节点如果是 p 或 q，则返回当前节点
             // 否则返回自己节点的左右子节点能找到的节点（都找到就返回自己）
+            // 对于每个当前节点，返回左边或者右边的查找结果，没找到就返回 null
+            // 因为是最近，所以找到了不是返回本身，而是返回找到的那个左\右子节点
             return dfs(root, p, q);
         }
 
         public TreeNode dfs(TreeNode cur, TreeNode p, TreeNode q) {
             if (cur == null || cur == p || cur == q) {
-                // 当前为 null 或者本身就是 p 或 q，就返回自己
+                // 找到了直接返回，找不到就返回 null
                 return cur;
             }
 
-            TreeNode left = dfs(cur.left, p, q); // 从左子节点找
-            TreeNode right = dfs(cur.right, p, q); // 从右子节点找
+            TreeNode left = dfs(cur.left, p, q);
+            TreeNode right = dfs(cur.right, p, q);
 
-            // 1 如果当前节点就是答案，直接返回
+            // 如果当前节点就是答案（左右都找到了），就返回自己
             if (left != null && right != null) {
                 return cur;
             }
 
-            // 2 否则 return 当前节点的查找结果（找到就返回对应的，否则是 null）
             if (left == null && right == null) {
+                // 左右都没找到
                 return null;
-            } else if (left == null) {
+            } else if (left != null) {
+                // 左边找到了
+                return left;
+            } else {
                 // 右边找到了
                 return right;
-            } else {
-                // 左边找到了（right == null）
-                return left;
             }
         }
     }
