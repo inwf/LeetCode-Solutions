@@ -15,36 +15,35 @@ public class NumberOfIslands {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public int numIslands(char[][] grid) {
-            // 网格图递归
+            // 网格图遍历，找到岛屿就 DFS 遍历染色
             // DFS
 
             int ans = 0;
             int m = grid.length;
             int n = grid[0].length;
+
             for (int i = 0; i < m; i++) {
                 for (int j = 0; j < n; j++) {
                     if (grid[i][j] == '1') {
-                        dfs(grid, i, j);
                         ans++;
+                        dfs(grid, i, j);
                     }
                 }
             }
 
             return ans;
-
         }
 
         public void dfs(char[][] grid, int x, int y) {
             int m = grid.length;
             int n = grid[0].length;
             if (x < 0 || x >= m || y < 0 || y >= n || grid[x][y] != '1') {
-                // 不符合条件就不往下走了
                 return;
             }
 
-            // 只要不是 '1' 就行
+            // 染色，此时一定在岛上
             grid[x][y] = '0';
-            // 右下左上
+
             dfs(grid, x, y + 1);
             dfs(grid, x + 1, y);
             dfs(grid, x, y - 1);
