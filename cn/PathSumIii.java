@@ -30,14 +30,14 @@ public class PathSumIii {
      * }
      */
     class Solution {
-        Map<Long, Integer> map = new HashMap<>();
+        Map<Long, Integer> cnt = new HashMap<>(); // 记录路径和为 i 的有 j 个（cnt[i] = j）
         int ans = 0;
 
         public int pathSum(TreeNode root, int targetSum) {
             // 参考灵神
             // 枚举路径的终点，统计有多少个起点
-            // 树上前缀和
-            map.put(0L, 1);
+            // 树上前缀和，需要遍历所有节点（dfs）
+            cnt.put(0L, 1); // 注意范围，路径和可能很大
             dfs(root, targetSum, 0L);
             return ans;
         }
@@ -47,18 +47,16 @@ public class PathSumIii {
                 return;
             }
 
-            // 选择 cur 节点，所以前缀和要 + cur.val
             sum += cur.val;
-            ans += map.getOrDefault(sum - targetSum, 0);
-            map.put(sum, map.getOrDefault(sum, 0) + 1);
+            ans += cnt.getOrDefault(sum - targetSum, 0);
+            cnt.put(sum, cnt.getOrDefault(sum, 0) + 1);
 
-            // 进入选择 cur.left 或 cur.right 后的 dfs
+            // 选择进入后续节点
             dfs(cur.left, targetSum, sum);
             dfs(cur.right, targetSum, sum);
 
-            // 恢复现场（这里肯定有 sum，所以直接 get 即可）
-            map.put(sum, map.get(sum) - 1);
-
+            // 回溯（恢复现场，但是 sum 是局部变量不用恢复，但是 cnt 需要回溯）
+            cnt.put(sum, cnt.get(sum) - 1);
         }
     }
     //leetcode submit region end(Prohibit modification and deletion)
