@@ -22,7 +22,7 @@ public class CombinationSum {
             return ans;
         }
 
-        public void dfs(int[] nums, int target, int sum, int startIndex) {
+        public void dfs(int[] candidates, int target, int sum, int startIndex) {
             if (sum > target) {
                 return;
             }
@@ -32,19 +32,19 @@ public class CombinationSum {
                 return;
             }
 
-            for (int i = startIndex; i < nums.length; i++) {
-                // 选择 nums[i]
-                path.add(nums[i]);
-                sum += nums[i];
+            int n = candidates.length;
+            for (int i = startIndex; i < n; i++) {
+                // 选择某个数
+                sum += candidates[i];
+                path.add(candidates[i]);
 
-                // 进入选择 nums[i] 后的 dfs
-                dfs(nums, target, sum, i);
+                // 进入选完这个数后的 dfs，可以重复选，所以传入的是 i 不是 i + 1
+                dfs(candidates, target, sum, i);
 
                 // 恢复现场
-                sum -= nums[i];
+                sum -= candidates[i];
                 path.remove(path.size() - 1);
             }
-
         }
     }
     //leetcode submit region end(Prohibit modification and deletion)
