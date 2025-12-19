@@ -17,17 +17,16 @@ public class GenerateParentheses {
         List<String> ans = new ArrayList<>();
 
         public List<String> generateParenthesis(int n) {
+            // 左括号随时都能加的，右括号只有左括号数量大于右括号数量的时候才能加
             char[] path = new char[2 * n];
-            // DFS 枚举：当前位置填左括号还是右括号
             dfs(0, 0, n, path);
             return ans;
         }
 
         public void dfs(int left, int right, int n, char[] path) {
             if (right == n) {
-                // 这里应该是 right == n，不能是 left == n，不然会提前退出
+                // 注意这里是右括号个数 = n 的时候才 return，否则会提前退出
                 ans.add(new String(path));
-                // 记得要 return
                 return;
             }
 
@@ -35,13 +34,11 @@ public class GenerateParentheses {
             if (left < n) {
                 path[left + right] = '(';
                 dfs(left + 1, right, n, path);
-
-                // 因为直接用下标存值，所以不用恢复现场
-                // 直接覆盖即可
             }
+            // 为什么不用恢复现场？因为 path 和 idx 配合直接覆盖了 path[idx]
 
             // 选右括号
-            if (right < left) {
+            if (left > right) {
                 path[left + right] = ')';
                 dfs(left, right + 1, n, path);
             }
