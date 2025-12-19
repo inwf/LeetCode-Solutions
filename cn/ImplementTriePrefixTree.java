@@ -14,11 +14,10 @@ public class ImplementTriePrefixTree {
 
     //leetcode submit region begin(Prohibit modification and deletion)
     class Trie {
-        // 就是 26 叉树
+        // 就是 26 叉树，三个函数长得差不多
         // 内部类：默认 private
-        class Node {
-            // 默认 26 个 null
-            Node[] son = new Node[26];
+        class Node { // 每个节点是一个 Node，用下标表示字符，本身不存储 value
+            Node[] son = new Node[26]; // 26 个 null
             boolean end = false;
         }
 
@@ -31,22 +30,19 @@ public class ImplementTriePrefixTree {
         }
 
         public void insert(String word) {
-            Node cur = root;
+            Node cur = root; // 用 cur 来遍历字典树
             for (char c : word.toCharArray()) {
                 int idx = c - 'a';
                 if (cur.son[idx] == null) {
-                    // 空
-                    // 此时 cur.son[idx] 不为空，有 son 和 end，son 里面是 26 个 null
                     cur.son[idx] = new Node();
                 }
                 cur = cur.son[idx];
             }
-            // 插入完这个单词，结尾用 end 表示
             cur.end = true;
         }
 
         public boolean search(String word) {
-            Node cur = root;
+            Node cur = root; // 用 cur 来遍历字典树
             for (char c : word.toCharArray()) {
                 int idx = c - 'a';
                 if (cur.son[idx] == null) {
@@ -54,14 +50,12 @@ public class ImplementTriePrefixTree {
                 }
                 cur = cur.son[idx];
             }
-
-            // 判断当前节点是不是之前插入单词的某个结尾
             return cur.end;
         }
 
         // 就是判断 prefix 是不是之前插入的 word 某个前缀
         public boolean startsWith(String prefix) {
-            Node cur = root;
+            Node cur = root; // 用 cur 来遍历字典树
             for (char c : prefix.toCharArray()) {
                 int idx = c - 'a';
                 if (cur.son[idx] == null) {
@@ -69,8 +63,6 @@ public class ImplementTriePrefixTree {
                 }
                 cur = cur.son[idx];
             }
-
-            // 判断当前节点是不是之前插入单词的某个结尾
             return true;
         }
     }
