@@ -22,6 +22,7 @@ public class CourseSchedule {
             // 否则返回 true
             // 入度为 0 的才有可能入队
 
+            // 记录入度
             int[] d = new int[numCourses];
             // 邻接表
             List<List<Integer>> g = new ArrayList<>();
@@ -29,53 +30,40 @@ public class CourseSchedule {
                 g.add(new ArrayList<>());
             }
 
-            // 规则数
-            int n = prerequisites.length;
-
-            // 构建入度和邻接表
-            for (int i = 0; i < n; i++) {
-                // a <- b
-                int a = prerequisites[i][0];
-                int b = prerequisites[i][1];
+            for (int[] x : prerequisites) {
+                int a = x[0];
+                int b = x[1]; // b -> a
+                g.get(b).add(a);
                 d[a]++;
-                g.get(b).add(a); // 邻接表（ b -> a ）
             }
 
+            return bfs(numCourses, g, d);
+        }
+
+        public boolean bfs(int numCourses, List<List<Integer>> g, int[] d) {
+            // 只有入度为 0 的才能入队
             Deque<Integer> queue = new LinkedList<>();
+
             for (int i = 0; i < numCourses; i++) {
                 if (d[i] == 0) {
                     queue.offer(i);
                 }
             }
 
-            bfs(queue, g, d);
-
-            if (cnt != numCourses) {
-                return false;
-            }
-
-            return true;
-        }
-
-        public void bfs(Deque<Integer> queue, List<List<Integer>> g, int[] d) {
             while (!queue.isEmpty()) {
-                // 删除 cur 这个节点
                 int cur = queue.poll();
                 cnt++;
 
-                int n = g.get(cur).size();
-                for (int i = 0; i < n; i++) {
-                    // 找出课程 cur 的后继节点
-                    // 删除 cur 后，把他的后继节点的入度 - 1
-                    int next = g.get(cur).get(i);
-                    d[next]--;
-
-                    if (d[next] == 0) {
-                        // 入队
-                        queue.offer(next);
+                for (int nx : g.get(cur)) {
+                    // cur -> nx
+                    d[nx]--;
+                    if (d[nx] == 0) {
+                        queue.offer(nx);
                     }
                 }
             }
+
+            return cnt == numCourses;
         }
     }
     //leetcode submit region end(Prohibit modification and deletion)
