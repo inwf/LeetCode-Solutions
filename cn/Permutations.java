@@ -2,8 +2,6 @@ package leetcode.editor.cn;
 
 import java.util.*;
 
-import leetcode.editor.common.*;
-
 /**
  * 46 全排列
  * 2025-11-27 16:25:48
@@ -16,12 +14,10 @@ public class Permutations {
     class Solution {
         List<List<Integer>> ans = new ArrayList<>();
         List<Integer> path = new ArrayList<>();
-
-        // 用于判断这个下标的元素是否被用过
-        boolean[] used = new boolean[30];
+        boolean[] used = new boolean[10];
 
         public List<List<Integer>> permute(int[] nums) {
-            // 可以没有，只是为了和答案一样
+            // 可以不排序，只是为了和答案一样
             Arrays.sort(nums);
             dfs(nums);
             return ans;
