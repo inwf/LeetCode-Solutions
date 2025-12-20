@@ -14,77 +14,76 @@ public class NQueens {
 
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
+        // 返回所有结果
         List<List<String>> ans = new ArrayList<>();
+        char[][] chessBoard;
 
         public List<List<String>> solveNQueens(int n) {
-            char[][] chessboard = new char[n][n];
+            chessBoard = new char[n][n];
             for (int i = 0; i < n; i++) {
                 for (int j = 0; j < n; j++) {
-                    chessboard[i][j] = '.';
+                    chessBoard[i][j] = '.';
                 }
             }
 
-            dfs(chessboard, n, 0);
+            dfs(n, 0);
+
             return ans;
         }
 
-        public void dfs(char[][] chessboard, int n, int row) {
+        public void dfs(int n, int row) {
             if (row == n) {
-                ans.add(Array2List(chessboard));
-                return;
+                ans.add(array2List(chessBoard));
             }
 
+            // 遍历 row 这一行的所有列
             for (int i = 0; i < n; i++) {
-                if (!check(row, i, n, chessboard)) {
-                    continue;
+                if (check(row, i, n)) {
+                    // 选择 [row,i] 是皇后
+                    chessBoard[row][i] = 'Q';
+
+                    // 进入选完后的 dfs
+                    dfs(n, row + 1);
+
+                    // 恢复现场
+                    chessBoard[row][i] = '.';
                 }
-
-                // 坐标 [row,i] 可以选
-                chessboard[row][i] = 'Q';
-
-                // 进入选了 row 行后的 dfs
-                dfs(chessboard, n, row + 1);
-
-                // 恢复现场
-                chessboard[row][i] = '.';
             }
         }
 
-        public List<String> Array2List(char[][] chessboard) {
-            List<String> list = new ArrayList<>();
-
-            for (char[] row : chessboard) {
-                list.add(String.valueOf(row));
-            }
-
-            return list;
-        }
-
-
-        boolean check(int row, int col, int n, char[][] chessboard) {
-            // 因为 dfs 每次选择的都是一行中的某个位置，所以这一行肯定只有一个皇后
-            // 判断这一列有没有皇后
-            for (int i = 0; i < n; i++) {
-                if (chessboard[i][col] == 'Q') {
+        public boolean check(int row, int col, int n) {
+            // 这一行不用检查了，因为每个 dfs 都是一行
+            // 检查这一列
+            for (int i = row - 1; i >= 0; i--) {
+                if (chessBoard[i][col] == 'Q') {
                     return false;
                 }
             }
 
-            // 判断 45° （往右上看）有没有皇后
+            // 检查右上方
             for (int i = row - 1, j = col + 1; i >= 0 && j < n; i--, j++) {
-                if (chessboard[i][j] == 'Q') {
+                if (chessBoard[i][j] == 'Q') {
                     return false;
                 }
             }
 
-            // 判断 135° （往左上看）有没有皇后
+            // 检查左上方
             for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
-                if (chessboard[i][j] == 'Q') {
+                if (chessBoard[i][j] == 'Q') {
                     return false;
                 }
             }
 
             return true;
+        }
+
+        public List<String> array2List(char[][] chessBoard) {
+            List<String> list = new ArrayList<>();
+            for (char[] chars : chessBoard) {
+                list.add(new String(chars));
+            }
+
+            return list;
         }
     }
     //leetcode submit region end(Prohibit modification and deletion)
