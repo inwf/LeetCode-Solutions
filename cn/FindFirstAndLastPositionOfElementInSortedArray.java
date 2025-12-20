@@ -20,22 +20,19 @@ public class FindFirstAndLastPositionOfElementInSortedArray {
             int start = findLeft(nums, target);
             int end = findLeft(nums, target + 1) - 1;
 
-            if (start != nums.length && nums[start] == target) {
-                // 找到了结果
-                return new int[]{start, end};
+            if (start == nums.length || nums[start] != target) {
+                // 找到这个数
+                return new int[]{-1, -1};
             }
 
-            // 注意这种 return 写法
-            return new int[]{-1, -1};
+            return new int[]{start, end};
         }
 
-        // 找到第一个 >= target 的元素下标，返回 nums.length 表示没找到
+        // 二分法找靠左边的： 第一个 nums[mid] >= target 的 mid
         public int findLeft(int[] nums, int target) {
-            int ans = nums.length;
             int l = 0;
             int r = nums.length - 1;
-            // 左闭右闭
-            // 没找到就返回 -1
+            int ans = nums.length;
             while (l <= r) {
                 int mid = l + (r - l) / 2;
                 if (nums[mid] >= target) {
@@ -45,7 +42,8 @@ public class FindFirstAndLastPositionOfElementInSortedArray {
                     l = mid + 1;
                 }
             }
-            return ans;
+
+            return ans; // 如果没找到返回的是 nums.length
         }
     }
     //leetcode submit region end(Prohibit modification and deletion)
