@@ -18,24 +18,23 @@ public class PalindromePartitioning {
         List<String> path = new ArrayList<>();
 
         public List<List<String>> partition(String s) {
-            // DFS，当前是回味串才进入 dfs
+            // DFS，当前是回文串才进入 dfs
+            // 一个字符的时候肯定是回文串，后面的就慢慢遍历判定即可
             dfs(s, 0);
             return ans;
         }
 
         public void dfs(String s, int startIndex) {
             if (startIndex == s.length()) {
+                // 添加答案
                 ans.add(new ArrayList<>(path));
-                // 记得返回
                 return;
             }
 
             for (int i = startIndex; i < s.length(); i++) {
                 if (pd(s, startIndex, i)) {
-                    // 当前分割是回文串
+                    // 是回文串（左闭右开）
                     path.add(s.substring(startIndex, i + 1));
-
-                    // 进入 dfs
                     dfs(s, i + 1);
 
                     // 恢复现场
@@ -52,7 +51,6 @@ public class PalindromePartitioning {
                 l++;
                 r--;
             }
-
             return true;
         }
     }
