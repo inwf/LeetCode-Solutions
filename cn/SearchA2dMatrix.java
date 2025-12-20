@@ -16,10 +16,13 @@ public class SearchA2dMatrix {
     class Solution {
         public boolean searchMatrix(int[][] matrix, int target) {
             // 二分法（只不过下标要换一下）
+            // 把二维矩阵拉成一维向量，下标映射：matrix[mid/n,mid%n] == nums[mid]
+
             int m = matrix.length;
             int n = matrix[0].length;
             int l = 0;
             int r = m * n - 1;
+
             while (l <= r) {
                 int mid = l + (r - l) / 2;
                 int i = mid / n;
