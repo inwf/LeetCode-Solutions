@@ -254,11 +254,13 @@ var maxProfit = function(prices) {
 </div></div>
 </div></div>
 
-<hr /><details open hint-container details><summary style="font-size: medium"><strong>🥳🥳 算法可视化 🥳🥳</strong></summary><div id="data_best-time-to-buy-and-sell-stock"  category="leetcode" ></div><div class="resizable aspect-ratio-container" style="height: 100%;">
+<hr /><details open hint-container details><summary style="font-size: medium"><strong>🌟🌟 算法可视化 🌟🌟</strong></summary><div id="data_best-time-to-buy-and-sell-stock"  category="leetcode" ></div><div class="resizable aspect-ratio-container" style="height: 100%;">
 <div id="iframe_best-time-to-buy-and-sell-stock"></div></div>
 </details><hr /><br />
 
 </div>
 </details>
 </div>
+
+
 
