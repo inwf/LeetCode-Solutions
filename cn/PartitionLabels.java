@@ -18,20 +18,22 @@ public class PartitionLabels {
             // 就是区间合并
 
             List<Integer> ans = new ArrayList<>();
-            int[] last = new int[26];
             int n = s.length();
+            // last[i] 是字符 i 最右方的下标
+            int[] last = new int[26];
             for (int i = 0; i < n; i++) {
-                last[s.charAt(i) - 'a'] = Math.max(last[s.charAt(i) - 'a'], i);
+                last[s.charAt(i) - 'a'] = i;
             }
 
-            int end = 0;
+            // 类比合并区间
             int start = 0;
+            int end = 0;
             for (int i = 0; i < n; i++) {
                 end = Math.max(end, last[s.charAt(i) - 'a']);
 
                 if (end == i) {
                     ans.add(end - start + 1);
-                    start = i + 1; // 下一个区间的起点
+                    start = i + 1;
                 }
             }
 
