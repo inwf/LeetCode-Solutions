@@ -17,14 +17,16 @@ public class JumpGame {
         public boolean canJump(int[] nums) {
             // 就是合并区间
             int n = nums.length;
-
-            // 就是当前位置
+            // 就是当前可到达的最远位置
             int cur = 0;
+
             for (int i = 0; i < n; i++) {
-                if (cur < i) {
+                if (i > cur) {
+                    // 不能到 i，所以不能继续跳了
                     return false;
                 }
 
+                // 可以在 i 处跳（也可以不跳）
                 cur = Math.max(cur, i + nums[i]);
             }
 
