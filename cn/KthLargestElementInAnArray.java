@@ -17,16 +17,15 @@ public class KthLargestElementInAnArray {
         public int findKthLargest(int[] nums, int k) {
             // 桶排序，因为有负数，所以映射到下标的时候 + 1e4 即可
 
-            int[] cnt = new int[20001];
+            int temp = 10010;
             int n = nums.length;
-            int temp = 10000;
+            int[] cnt = new int[temp * 2];
+
             for (int i = 0; i < n; i++) {
-                // 计数，下标 - temp 就是元素的值
                 cnt[nums[i] + temp]++;
             }
 
-            for (int i = 20000; i >= 0; i--) {
-                // 有元素就减，没有就减 0
+            for (int i = temp * 2 - 1; i >= 0; i--) {
                 k = k - cnt[i];
 
                 if (k <= 0) {
