@@ -11,10 +11,10 @@ import java.util.*;
 public class MinStack {
 
     //leetcode submit region begin(Prohibit modification and deletion)
-    class MinStack {
+    class minStack {
         Deque<int[]> stk = new LinkedList<>();
 
-        public MinStack() {
+        public minStack() {
             // 先放个哨兵节点进去，不然方第一个的时候获取不到 getMin()
             stk.push(new int[]{0, Integer.MAX_VALUE});
         }
