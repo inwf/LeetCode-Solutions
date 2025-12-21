@@ -7,9 +7,7 @@ public class Test {
     private static int i = 1;
 
     public static void main(String[] args) throws Exception {
-        for (int i = 0; i < 3; i++) {
-            new Thread(new Print(i)).start();
-        }
+        System.out.println("hello".repeat(2));
     }
 
     private static class Print implements Runnable {
