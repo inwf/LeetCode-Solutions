@@ -27,27 +27,25 @@ public class LargestRectangleInHistogram {
 
             for (int i = 0; i < n; i++) {
                 while (!stk.isEmpty() && heights[i] < heights[stk.peek()]) {
+                    // 找到了比 stk.peek() 小的高度
                     int h = heights[stk.pop()];
-                    // 左闭右闭
-                    int right = i - 1;
-                    // 0 或者 左边最后一个不大于当前高度的下标
                     int left = stk.isEmpty() ? 0 : stk.peek() + 1;
-                    ans = Math.max(ans, (right - left + 1) * h);
+                    int right = i - 1;
+                    int w = right - left + 1;
+                    ans = Math.max(ans, w * h);
                 }
-
                 stk.push(i);
             }
 
-            // 最后几个单独处理（此时是递增的）
             while (!stk.isEmpty()) {
+                // 处理最后面几个
+                // 现在 stk 是单调递增的
                 int h = heights[stk.pop()];
-                // 左闭右闭
-                int right = n - 1;
-                // 0 或者 左边最后一个不大于当前高度的下标
                 int left = stk.isEmpty() ? 0 : stk.peek() + 1;
-                ans = Math.max(ans, (right - left + 1) * h);
+                int right = n - 1;
+                int w = right - left + 1;
+                ans = Math.max(ans, w * h);
             }
-
             return ans;
         }
     }
