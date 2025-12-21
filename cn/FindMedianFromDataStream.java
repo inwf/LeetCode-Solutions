@@ -18,8 +18,8 @@ public class FindMedianFromDataStream {
         // 参考：https://leetcode.cn/problems/find-median-from-data-stream/solutions/3015873/ru-he-zi-ran-yin-ru-da-xiao-dui-jian-ji-4v22k/?envType=study-plan-v2&envId=top-100-liked
         // left 是最大堆
         // right 是最小堆
-        PriorityQueue<Integer> left = new PriorityQueue<>((a, b) -> b - a); // 最大堆
-        PriorityQueue<Integer> right = new PriorityQueue<>(); // 小根堆
+        PriorityQueue<Integer> left = new PriorityQueue<>((a, b) -> b - a);
+        PriorityQueue<Integer> right = new PriorityQueue<>((a, b) -> a - b);
         // size() 方法时间复杂度是 O(1)
         // 所以不用单独记录长度
 
@@ -28,13 +28,11 @@ public class FindMedianFromDataStream {
 
         public void addNum(int num) {
             if (left.size() == right.size()) {
-                // 先插入右边，然后把右边最小值放入左边
+                // 先放右，再放左
                 right.offer(num);
                 left.offer(right.poll());
             } else {
-                // 因为是按左边最大值作为奇数的时候的中位数的，所以只可能出现左边长度比右边大 1 的情况
-                // 此时左边比右边多一个
-                // 那么先插入左边，然后把左边最大值放到右边
+                // 先放左，再放右
                 left.offer(num);
                 right.offer(left.poll());
             }
