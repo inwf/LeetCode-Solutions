@@ -15,15 +15,12 @@ public class ValidParentheses {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public boolean isValid(String s) {
-            // 用 Deque 模拟栈
-            Deque<Character> stack = new ArrayDeque<>();
+            // 栈模拟题
+            // 左括号直接入，右括号就匹配
+
+            Deque<Character> stack = new LinkedList<>();
             int n = s.length();
-
             for (int i = 0; i < n; i++) {
-                // 左括号直接入栈
-                // 右括号判断栈顶是否匹配
-                // 不匹配直接返回 false
-
                 char c = s.charAt(i);
                 if (c == '(' || c == '[' || c == '{') {
                     stack.push(c);
@@ -31,16 +28,20 @@ public class ValidParentheses {
                     if (stack.isEmpty()) {
                         return false;
                     }
+
                     char temp = stack.pop();
                     if (c == ')' && temp != '(') {
                         return false;
-                    } else if (c == ']' && temp != '[') {
+                    }
+                    if (c == ']' && temp != '[') {
                         return false;
-                    } else if (c == '}' && temp != '{') {
+                    }
+                    if (c == '}' && temp != '{') {
                         return false;
                     }
                 }
             }
+
             return stack.isEmpty();
         }
     }
