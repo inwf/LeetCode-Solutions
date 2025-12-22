@@ -16,18 +16,20 @@ public class HouseRobber {
     class Solution {
         public int rob(int[] nums) {
             // 做到肌肉记忆即可
-            // dp[i] 表示到第 i（包括 i ） 个的最大值
+            // dp[i] 表示 i 结尾时的最大值
+
             int n = nums.length;
+            int[] dp = new int[n];
             if (n == 1) {
                 return nums[0];
             }
 
-            int[] dp = new int[n];
             dp[0] = nums[0];
             dp[1] = Math.max(nums[0], nums[1]);
             for (int i = 2; i < n; i++) {
                 dp[i] = Math.max(dp[i - 2] + nums[i], dp[i - 1]);
             }
+
             return dp[n - 1];
         }
     }
