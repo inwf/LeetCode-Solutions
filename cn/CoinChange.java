@@ -15,22 +15,20 @@ public class CoinChange {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public int coinChange(int[] coins, int amount) {
-            // 完全背包问题 -> 从左往右
-            // 恰好装满问题 -> 初始化为 MAX_VALUE
+            // 完全背包问题：左 -> 右
+            // 恰好装满：初始化 dp[0] = 0，其他 MAX_VALUE
 
-            // dp[i] 表示金额为 i 的最少硬币数
             int[] dp = new int[amount + 1];
-            Arrays.fill(dp, Integer.MAX_VALUE/2);
+            Arrays.fill(dp, Integer.MAX_VALUE / 2);
             dp[0] = 0;
             int n = coins.length;
             for (int i = 0; i < n; i++) {
-                // 至少能装一个，所以 j 从 coins[i] 开始遍历
                 for (int j = coins[i]; j <= amount; j++) {
-                    dp[j] = Math.min(dp[j], dp[j - coins[i]] + 1); // 不装/装
+                    dp[j] = Math.min(dp[j - coins[i]] + 1, dp[j]); // 选 vx 不选
                 }
             }
 
-            return dp[amount] == Integer.MAX_VALUE/2? -1:dp[amount];
+            return dp[amount] == Integer.MAX_VALUE / 2 ? -1 : dp[amount];
         }
     }
     //leetcode submit region end(Prohibit modification and deletion)
