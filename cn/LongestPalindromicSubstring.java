@@ -15,7 +15,7 @@ public class LongestPalindromicSubstring {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public String longestPalindrome(String s) {
-            // 分奇回文串和偶回文串
+            // 中心扩展法：分奇回文串和偶回文串
             // 奇回文串：   abccdccba
             // 偶回文串：   abccddccba
             // 遍历每个回文串的中心，然后往两边扩展
@@ -29,14 +29,13 @@ public class LongestPalindromicSubstring {
                 int l = i;
                 int r = i;
                 while (l >= 0 && r < n && s.charAt(l) == s.charAt(r)) {
+                    // 当前是回文串
+                    if (r - l > ansRight - ansLeft) {
+                        ansLeft = l;
+                        ansRight = r;
+                    }
                     l--;
                     r++;
-                }
-
-                // 此时 [l+1,r-1] 是回文串
-                if ((r - 1) - (l + 1) > ansRight - ansLeft) {
-                    ansLeft = l + 1;
-                    ansRight = r - 1;
                 }
             }
 
@@ -45,18 +44,17 @@ public class LongestPalindromicSubstring {
                 int l = i;
                 int r = i + 1;
                 while (l >= 0 && r < n && s.charAt(l) == s.charAt(r)) {
+                    // 当前是回文串
+                    if (r - l > ansRight - ansLeft) {
+                        ansLeft = l;
+                        ansRight = r;
+                    }
                     l--;
                     r++;
                 }
-
-                // 此时 [l+1,r-1] 是回文串
-                if ((r - 1) - (l + 1) > ansRight - ansLeft) {
-                    ansLeft = l + 1;
-                    ansRight = r - 1;
-                }
             }
 
-            return s.substring(ansLeft, ansRight + 1);
+            return s.substring(ansLeft, ansRight + 1); // 左闭右开
         }
     }
     //leetcode submit region end(Prohibit modification and deletion)
