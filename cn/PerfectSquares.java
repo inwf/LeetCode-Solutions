@@ -15,17 +15,18 @@ public class PerfectSquares {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public int numSquares(int n) {
-            // dp[i] 表示和恰好为 i 的最少个数
-            int[] dp = new int[n + 1];
+            // dp[i] 表示和为 i 的最小平方数的数量
+            // 恰好装满问题：dp[0] = 0
+            // 其余最小就初始化为 MAX_VALUE，最大就初始化为 MIN_VALUIE
 
+            int[] dp = new int[n + 1];
             Arrays.fill(dp, Integer.MAX_VALUE);
             dp[0] = 0;
-
             for (int i = 1; i * i <= n; i++) {
-                // 当前数是 i*i （第 i 个数是 i*i）
+                // 第 i 个数是 i * i
                 int x = i * i;
                 for (int j = x; j <= n; j++) {
-                    dp[j] = Math.min(dp[j],dp[j-x] + 1);
+                    dp[j] = Math.min(dp[j - x] + 1, dp[j]); // 选和不选
                 }
             }
 
