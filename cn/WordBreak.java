@@ -16,20 +16,21 @@ public class WordBreak {
     class Solution {
         public boolean wordBreak(String s, List<String> wordDict) {
             // dp[i]：前 i 个字符（即 s[0..i - 1]）是否可以被字典中的单词拼出来
+            // 为什么 dp[i] 不是以 i 结尾的呢？因为如果是空的话就不能判断了，dp[0] 应该表示的是空字符串
+            // 遍历每个下标 i，判断 s[i - maxLen, i - 1] 中是否有符合要求的下标，有的话 dp[i] = true
+
             int maxLen = 0;
-            for (String x : wordDict) {
-                maxLen = Math.max(maxLen, x.length());
+            int n = s.length();
+            Set<String> set = new HashSet<>();
+            for (String word : wordDict) {
+                maxLen = Math.max(maxLen, word.length());
+                set.add(word);
             }
 
-            Set<String> set = new HashSet<>(wordDict);
-            int n = s.length();
             boolean[] dp = new boolean[n + 1];
             dp[0] = true;
-
-            // 枚举前缀长度 i：表示我们要判断 s[0..i - 1] 能不能拆分
             for (int i = 1; i <= n; i++) {
-                // j 代表最后一段的开始下标
-                for (int j = Math.max(i - maxLen, 0); j < i; j++) {
+                for (int j = Math.max(0, i - maxLen); j < i; j++) {
                     if (dp[j] && set.contains(s.substring(j, i))) {
                         dp[i] = true;
                         break;
