@@ -31,17 +31,17 @@ public class PartitionEqualSubsetSum {
             }
 
             if (sum % 2 == 1) {
+                // 和为奇数
                 return false;
             }
 
+            // 和为偶数
             sum /= 2;
-            // dp[i] 表示当背包容量为 w 时，能够获得的最大价值
+            // dp[i] 表示体积为 i 的最大价值
             int[] dp = new int[sum + 1];
-            dp[0] = 0;
-
-            for(int i =0;i<n;i++){
-                for(int j = sum;j>=nums[i];j--){
-                    dp[j] = Math.max(dp[j],dp[j-nums[i]] + nums[i]);
+            for (int i = 0; i < n; i++) {
+                for (int j = sum; j >= nums[i]; j--) {
+                    dp[j] = Math.max(dp[j - nums[i]] + nums[i], dp[j]);
                 }
             }
 
