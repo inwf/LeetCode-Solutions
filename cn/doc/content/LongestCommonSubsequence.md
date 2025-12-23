@@ -61,7 +61,7 @@
 
 ## 基本思路
 
-和 [✨72. 编辑距离](/problems/edit-distance/) 同为经典的双字符串动态规划问题。用两个指针 `i, j` 在两个字符串上游走，这就是「状态」，字符串中的每个字符都有两种「选择」，要么在 `lcs` 中，要么不在。
+和 [✔ ✨72. 编辑距离](/problems/edit-distance/) 同为经典的双字符串动态规划问题。用两个指针 `i, j` 在两个字符串上游走，这就是「状态」，字符串中的每个字符都有两种「选择」，要么在 `lcs` 中，要么不在。
 
 ![](https://labuladong.online/algo/images/LCS/lcs.png)
 
@@ -270,11 +270,13 @@ var longestCommonSubsequence = function(s1, s2) {
 </div></div>
 </div></div>
 
-<hr /><details open hint-container details><summary style="font-size: medium"><strong>👾👾 算法可视化 👾👾</strong></summary><div id="data_longest-common-subsequence"  category="leetcode" ></div><div class="resizable aspect-ratio-container" style="height: 100%;">
+<hr /><details open hint-container details><summary style="font-size: medium"><strong>🍭🍭 算法可视化 🍭🍭</strong></summary><div id="data_longest-common-subsequence"  category="leetcode" ></div><div class="resizable aspect-ratio-container" style="height: 100%;">
 <div id="iframe_longest-common-subsequence"></div></div>
 </details><hr /><br />
 
 </div>
 </details>
 </div>
+
+
 

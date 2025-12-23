@@ -16,6 +16,7 @@ public class LongestCommonSubsequence {
     class Solution {
         public int longestCommonSubsequence(String text1, String text2) {
             // dp[i][j] 表示 text1[0,i-1] 和 text2[0,j-1] 的最长公共子序列的长度
+            // i 和 j 就是前 i 个和前 j 个字符
 
             int m = text1.length();
             int n = text2.length();
@@ -23,7 +24,6 @@ public class LongestCommonSubsequence {
 
             for (int i = 1; i <= m; i++) {
                 for (int j = 1; j <= n; j++) {
-                    // 这样可以确保每个点都遍历到
                     if (text1.charAt(i - 1) == text2.charAt(j - 1)) {
                         dp[i][j] = dp[i - 1][j - 1] + 1;
                     } else {
