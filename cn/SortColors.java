@@ -22,11 +22,12 @@ public class SortColors {
                 int x = nums[i];
                 nums[i] = 2;
 
-                if (x<=1){
+                if (x <= 1) {
+                    //p1 可以看成 0 和 1 的个数
                     nums[p1++] = 1;
                 }
 
-                if (x==0){
+                if (x == 0) {
                     nums[p0++] = 0;
                 }
             }
