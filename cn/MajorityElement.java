@@ -17,14 +17,13 @@ public class MajorityElement {
         public int majorityElement(int[] nums) {
             int ans = nums[0];
             int hp = 0;
-            int n = nums.length;
-            for (int i = 0; i < n; i++) {
-                if (hp == 0){
-                    ans = nums[i];
+            for (int num : nums) {
+                if (hp == 0) {
+                    ans = num;
                     hp = 1;
-                }else if (ans == nums[i]){
-                    hp ++;
-                }else {
+                } else if (ans == num) {
+                    hp++;
+                } else {
                     hp--;
                 }
             }
