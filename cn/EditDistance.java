@@ -22,13 +22,13 @@ public class EditDistance {
             int n = word2.length();
             int[][] dp = new int[m + 1][n + 1];
 
-            // 初始化第一行和第一列（要初始化所有情况）
-            for (int i = 0; i <= n; i++) {
-                dp[0][i] = i;
-            }
-
+            // 初始化第一列和第一行
+            // 1143. 最长公共子序列为什么不用初始化？因为默认就是 0
             for (int i = 0; i <= m; i++) {
                 dp[i][0] = i;
+            }
+            for (int i = 0; i <= n; i++) {
+                dp[0][i] = i;
             }
 
             for (int i = 1; i <= m; i++) {
@@ -36,14 +36,13 @@ public class EditDistance {
                     if (word1.charAt(i - 1) == word2.charAt(j - 1)) {
                         dp[i][j] = dp[i - 1][j - 1];
                     } else {
-                        // 替换、删除、删除
+                        // 替换、删除（等价于插入），别忘了最后要 + 1（表示三种操作中的某一个操作）
                         dp[i][j] = Math.min(dp[i - 1][j - 1], Math.min(dp[i - 1][j], dp[i][j - 1])) + 1;
                     }
                 }
             }
 
             return dp[m][n];
-
         }
     }
     //leetcode submit region end(Prohibit modification and deletion)
